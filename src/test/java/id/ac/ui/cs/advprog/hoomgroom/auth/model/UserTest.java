@@ -74,10 +74,10 @@ class UserTest {
 
     @Test
     void testCreateUserValidSex() {
-        User userM = userBuilder.sex('M').build();
-        User userF = userBuilder.sex('F').build();
-        assertEquals('M', userM.getSex());
-        assertEquals('F', userF.getSex());
+        User userM = userBuilder.sex("M").build();
+        User userF = userBuilder.sex("F").build();
+        assertEquals("M", userM.getSex());
+        assertEquals("F", userF.getSex());
     }
 
     @Test

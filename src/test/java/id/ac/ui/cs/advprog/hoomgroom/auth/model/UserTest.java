@@ -8,7 +8,7 @@ class UserTest {
     UserBuilder userBuilder;
     @BeforeEach
     void setUp() {
-        this.userBuilder = new User.builder();
+        this.userBuilder = User.builder();
     }
     @Test
     void testCreateUserValidUsername() {
@@ -18,8 +18,8 @@ class UserTest {
 
     @Test
     void testCreateUserInvalidUsername() {
-        assertThrows(IllegalArgumentException.class, userBuilder.username("").build());
-        assertThrows(IllegalArgumentException.class, userBuilder.username("~@#$!@%@#$%!$^!#$%").build());
+        assertThrows(IllegalArgumentException.class, () -> userBuilder.username("").build());
+        assertThrows(IllegalArgumentException.class, () -> userBuilder.username("~@#$!@%@#$%!$^!#$%").build());
     }
 
     @Test
@@ -31,7 +31,7 @@ class UserTest {
 
     @Test
     void testCreateUserInvalidPassword() {
-        assertThrows(IllegalArgumentException.class, userBuilder.password("").build());
+        assertThrows(IllegalArgumentException.class, () -> userBuilder.password("").build());
     }
 
     @Test
@@ -55,6 +55,6 @@ class UserTest {
 
     @Test
     void testCreateUserInvalidEmail() {
-        assertThrows(userBuilder.email("Gak Punya Email 😭").build());
+        assertThrows(IllegalArgumentException.class, () -> userBuilder.email("Gak Punya Email 😭").build());
     }
 }

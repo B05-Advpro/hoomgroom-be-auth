@@ -17,7 +17,6 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,7 +38,7 @@ public class User implements UserDetails {
     private LocalDate birthDate;
 
     @Setter
-    private char sex;
+    private String sex;
 
     @Setter
     private String role;

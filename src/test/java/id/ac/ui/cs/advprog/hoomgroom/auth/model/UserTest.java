@@ -82,7 +82,7 @@ class UserTest {
 
     @Test
     void testCreateUserInvalidSex() {
-        assertThrows(IllegalArgumentException.class, () -> userBuilder.sex('N').build());
+        assertThrows(IllegalArgumentException.class, () -> userBuilder.sex("N").build());
     }
 
     @Test

@@ -1,5 +1,6 @@
 package id.ac.ui.cs.advprog.hoomgroom.auth.model;
 
+import id.ac.ui.cs.advprog.hoomgroom.auth.enums.UserRole;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -87,11 +88,11 @@ class UserTest {
 
     @Test
     void testCreateUserValidRoles() {
-        User user1 = userBuilder.role("USER").build();
-        User user2 = userBuilder.role("ADMIN").build();
+        User user1 = userBuilder.role(UserRole.USER.getRole()).build();
+        User user2 = userBuilder.role(UserRole.ADMIN.getRole()).build();
 
-        assertEquals("USER", user1.getRole());
-        assertEquals("ADMIN", user2.getRole());
+        assertEquals(UserRole.USER, user1.getRole());
+        assertEquals(UserRole.ADMIN, user2.getRole());
     }
 
     @Test

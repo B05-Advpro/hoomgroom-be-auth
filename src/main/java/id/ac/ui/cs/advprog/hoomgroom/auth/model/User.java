@@ -1,5 +1,6 @@
 package id.ac.ui.cs.advprog.hoomgroom.auth.model;
 
+import id.ac.ui.cs.advprog.hoomgroom.auth.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -41,7 +42,8 @@ public class User implements UserDetails {
     private String sex;
 
     @Setter
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
 
     public static UserBuilder builder() {
         return new UserBuilder();
@@ -49,7 +51,10 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role));
+        if (this.role == UserRole.ADMIN) {
+            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        }
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override

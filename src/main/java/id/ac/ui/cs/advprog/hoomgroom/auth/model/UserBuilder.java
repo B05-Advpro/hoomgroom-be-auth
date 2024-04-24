@@ -1,5 +1,7 @@
 package id.ac.ui.cs.advprog.hoomgroom.auth.model;
 
+import id.ac.ui.cs.advprog.hoomgroom.auth.enums.UserRole;
+
 import java.time.LocalDate;
 import java.util.regex.Pattern;
 
@@ -11,7 +13,7 @@ public class UserBuilder {
     private String password;
     private String email;
     private String sex;
-    private String role;
+    private UserRole role;
     private LocalDate birthDate;
 
     public UserBuilder username(String username) {
@@ -52,10 +54,10 @@ public class UserBuilder {
     }
 
     public UserBuilder role(String role){
-        if (!(role.equals("USER") || role.equals("ADMIN"))) {
+        if (!UserRole.contains(role)) {
             throw new IllegalArgumentException();
         }
-        this.role = role;
+        this.role = UserRole.valueOf(role);
         return this;
     }
     public UserBuilder birthDate(String birthDate){

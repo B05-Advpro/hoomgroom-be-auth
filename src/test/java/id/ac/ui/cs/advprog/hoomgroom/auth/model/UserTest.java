@@ -24,8 +24,8 @@ class UserTest {
 
     @Test
     void testCreateUserValidPassword() {
-        User user = userBuilder.password("adprosukses123").build();
-        assertEquals("{bcrypt}$2a$12$qwDzccZRqXQ6Dm3auq5Sx.nXegoc0vfuO84DoLVLE.sTgYGjM/kw2",
+        User user = userBuilder.password("$2a$12$tuUIz/Suy/iFj5b6UFWmROzMiqYMyPokavtlnVhwEHhF0CeCddokO").build();
+        assertEquals("$2a$12$tuUIz/Suy/iFj5b6UFWmROzMiqYMyPokavtlnVhwEHhF0CeCddokO",
                 user.getPassword());
     }
 

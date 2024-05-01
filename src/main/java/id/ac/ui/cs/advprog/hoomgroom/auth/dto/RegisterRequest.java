@@ -1,5 +1,6 @@
 package id.ac.ui.cs.advprog.hoomgroom.auth.dto;
 
+import id.ac.ui.cs.advprog.hoomgroom.auth.enums.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +17,7 @@ public class RegisterRequest {
     private String fullName;
     private String password;
     private String email;
-    private LocalDate birthDate;
+    private String role;
+    private String birthDate;
     private String sex;
 }

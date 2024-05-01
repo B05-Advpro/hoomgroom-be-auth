@@ -1,8 +1,12 @@
 package id.ac.ui.cs.advprog.hoomgroom.auth.service;
 
+import id.ac.ui.cs.advprog.hoomgroom.auth.dto.AuthenticationRequest;
+import id.ac.ui.cs.advprog.hoomgroom.auth.dto.AuthenticationResponse;
+import id.ac.ui.cs.advprog.hoomgroom.auth.dto.RegisterRequest;
 import id.ac.ui.cs.advprog.hoomgroom.auth.enums.UserRole;
 import id.ac.ui.cs.advprog.hoomgroom.auth.model.User;
 import id.ac.ui.cs.advprog.hoomgroom.auth.repositories.UserRepository;
+import id.ac.ui.cs.advprog.hoomgroom.auth.services.AuthService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -79,7 +83,7 @@ public class AuthServiceTest {
         String token = "abcde.fghij.klmno";
         doReturn(token).when(jwtService).generateToken(new HashMap<>(), user);
 
-        RegisterResponse registerResponse = authService.register(registerRequest);
+        AuthenticationResponse registerResponse = authService.register(registerRequest);
         verify(userRepository, times(1)).save(user);
         assertEquals(registerResponse.getToken(), token);
     }

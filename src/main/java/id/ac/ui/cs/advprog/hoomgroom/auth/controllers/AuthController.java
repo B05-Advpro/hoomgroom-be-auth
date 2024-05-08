@@ -1,5 +1,6 @@
 package id.ac.ui.cs.advprog.hoomgroom.auth.controllers;
 
+import id.ac.ui.cs.advprog.hoomgroom.auth.dto.AuthenticationRequest;
 import id.ac.ui.cs.advprog.hoomgroom.auth.dto.AuthenticationResponse;
 import id.ac.ui.cs.advprog.hoomgroom.auth.dto.RegisterRequest;
 import id.ac.ui.cs.advprog.hoomgroom.auth.services.AuthService;
@@ -29,6 +30,20 @@ public class AuthController {
             response = new ResponseEntity<>(AuthenticationResponse.builder()
                     .status("failed")
                     .message("User already exists.")
+                    .build(), HttpStatus.BAD_REQUEST);
+        }
+        return response;
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Object> authenticate(@RequestBody AuthenticationRequest request) {
+        ResponseEntity<Object> response;
+        try {
+            response = new ResponseEntity<>(authService.authenticate(request), HttpStatus.OK);
+        } catch (Exception e) {
+            response = new ResponseEntity<>(AuthenticationResponse.builder()
+                    .status("failed")
+                    .message("Login failed.")
                     .build(), HttpStatus.BAD_REQUEST);
         }
         return response;

@@ -8,6 +8,8 @@ import id.ac.ui.cs.advprog.hoomgroom.auth.model.User;
 import id.ac.ui.cs.advprog.hoomgroom.auth.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,9 @@ public class AuthServiceImpl implements AuthService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     @Override
     public AuthenticationResponse register(RegisterRequest request) {
@@ -53,6 +58,19 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        return null;
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                request.getUsername(),
+                request.getPassword()
+        ));
+        User user = userRepository.findByUsername(request.getUsername()).orElseThrow();
+        Map<String, Object> extraClaims = new HashMap<>();
+        extraClaims.put("role", user.getRole());
+        String jwtToken = jwtService.generateToken(extraClaims, user);
+        Map<String, String> data = new HashMap<String, String>();
+        data.put("token", jwtToken);
+        return AuthenticationResponse.builder()
+                .status("success")
+                .message("Authentication successful.")
+                .data(data).build();
     }
 }

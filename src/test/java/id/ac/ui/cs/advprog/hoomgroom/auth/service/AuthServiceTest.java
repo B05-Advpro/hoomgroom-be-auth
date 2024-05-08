@@ -14,15 +14,23 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.naming.AuthenticationException;
 import java.util.HashMap;
+import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class AuthServiceTest {
+    @Mock
+    private AuthenticationManager authenticationManager;
+
     @Mock
     private UserRepository userRepository;
 
@@ -65,33 +73,102 @@ public class AuthServiceTest {
         loginRequest.setPassword(password);
     }
 
+    /*
+    Register tests
+     */
     @Test
     void testValidRegister() {
-        String username = "cbkadal";
-        String fullName = "Cicak bin Kadal";
-        String email = "cbkadal@kadal.co";
-        String password = "kadalbesar123";
-        String birthDate = "2004-04-04";
-        doReturn("$2a$12$tuUIz/Suy/iFj5b6UFWmROzMiqYMyPokavtlnVhwEHhF0CeCddokO").when(passwordEncoder).encode(password);
-        String encodedPassword = passwordEncoder.encode(password);
-
-        User user = User.builder()
-                .username(username)
-                .fullName(fullName)
-                .email(email)
-                .birthDate(birthDate)
-                .password(encodedPassword)
-                .role("USER")
-                .sex("M")
-                .build();
-
         String token = "abcde.fghij.klmno";
         doReturn(token).when(jwtService).generateToken(any(User.class));
 
-        doReturn("$2a$12$tuUIz/Suy/iFj5b6UFWmROzMiqYMyPokavtlnVhwEHhF0CeCddokO").when(passwordEncoder).encode(registerRequest.getPassword());
+        doReturn("$2a$12$tuUIz/Suy/iFj5b6UFWmROzMiqYMyPokavtlnVhwEHhF0CeCddokO")
+                .when(passwordEncoder)
+                .encode(registerRequest.getPassword());
 
         AuthenticationResponse registerResponse = authService.register(registerRequest);
         verify(userRepository, times(1)).save(any(User.class));
         assertEquals(registerResponse.getToken(), token);
+    }
+
+    @Test
+    void testValidRegisterEmptyFullName() {
+        registerRequest.setFullName("");
+        String token = "abcde.fghij.klmno";
+        doReturn(token).when(jwtService).generateToken(any(User.class));
+
+        doReturn("$2a$12$tuUIz/Suy/iFj5b6UFWmROzMiqYMyPokavtlnVhwEHhF0CeCddokO")
+                .when(passwordEncoder)
+                .encode(registerRequest.getPassword());
+
+        AuthenticationResponse registerResponse = authService.register(registerRequest);
+        verify(userRepository, times(1)).save(any(User.class));
+        assertEquals(registerResponse.getToken(), token);
+    }
+
+    @Test
+    void testInvalidRegisterEmptyUsername() {
+        registerRequest.setUsername("");
+        assertThrows(IllegalArgumentException.class, () -> authService.register(registerRequest));
+    }
+
+    @Test
+    void testInvalidRegisterEmptyPassword() {
+        registerRequest.setPassword("");
+        doReturn("")
+                .when(passwordEncoder)
+                .encode(registerRequest.getPassword());
+        assertThrows(IllegalArgumentException.class, () -> authService.register(registerRequest));
+    }
+
+    @Test
+    void testInvalidRegisterEmptyEmail() {
+        registerRequest.setEmail("");
+        doReturn("$2a$12$tuUIz/Suy/iFj5b6UFWmROzMiqYMyPokavtlnVhwEHhF0CeCddokO")
+                .when(passwordEncoder)
+                .encode(registerRequest.getPassword());
+        assertThrows(IllegalArgumentException.class, () -> authService.register(registerRequest));
+    }
+
+    @Test
+    void testInvalidRegisterEmptyRole() {
+        registerRequest.setRole("");
+        doReturn("$2a$12$tuUIz/Suy/iFj5b6UFWmROzMiqYMyPokavtlnVhwEHhF0CeCddokO")
+                .when(passwordEncoder)
+                .encode(registerRequest.getPassword());
+        assertThrows(IllegalArgumentException.class, () -> authService.register(registerRequest));
+    }
+
+    @Test
+    void testInvalidRegisterEmptySex() {
+        registerRequest.setRole("");
+        doReturn("$2a$12$tuUIz/Suy/iFj5b6UFWmROzMiqYMyPokavtlnVhwEHhF0CeCddokO")
+                .when(passwordEncoder)
+                .encode(registerRequest.getPassword());
+        assertThrows(IllegalArgumentException.class, () -> authService.register(registerRequest));
+    }
+
+    /*
+    Login tests
+     */
+    @Test
+    void testValidLogin() {
+        String token = "abcde.fghij.klmno";
+        User user = User.builder().username(loginRequest.getUsername()).password(loginRequest.getPassword()).build();
+        doReturn(token).when(jwtService).generateToken(user);
+        doReturn(user).when(userRepository).findByUsername(loginRequest.getUsername());
+        doReturn(null).when(authenticationManager).authenticate(new UsernamePasswordAuthenticationToken(
+                loginRequest.getUsername(),
+                loginRequest.getPassword()
+        ));
+
+        AuthenticationResponse loginResponse = authService.authenticate(loginRequest);
+        verify(userRepository, times(1)).findByUsername("cbkadal");
+        assertEquals(loginResponse.getToken(), token);
+    }
+
+    @Test
+    void testInvalidLogin() {
+        loginRequest.setPassword("passwordSalah");
+        assertThrows(NoSuchElementException.class, () -> authService.authenticate(loginRequest));
     }
 }

@@ -7,6 +7,7 @@ import id.ac.ui.cs.advprog.hoomgroom.auth.enums.UserRole;
 import id.ac.ui.cs.advprog.hoomgroom.auth.model.User;
 import id.ac.ui.cs.advprog.hoomgroom.auth.repositories.UserRepository;
 import id.ac.ui.cs.advprog.hoomgroom.auth.services.AuthServiceImpl;
+import id.ac.ui.cs.advprog.hoomgroom.auth.services.JwtService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

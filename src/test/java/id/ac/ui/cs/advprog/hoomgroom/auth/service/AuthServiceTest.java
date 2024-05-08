@@ -21,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import javax.naming.AuthenticationException;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -155,7 +156,7 @@ public class AuthServiceTest {
         String token = "abcde.fghij.klmno";
         User user = User.builder().username(loginRequest.getUsername()).password(loginRequest.getPassword()).build();
         doReturn(token).when(jwtService).generateToken(user);
-        doReturn(user).when(userRepository).findByUsername(loginRequest.getUsername());
+        doReturn(Optional.ofNullable(user)).when(userRepository).findByUsername(loginRequest.getUsername());
         doReturn(null).when(authenticationManager).authenticate(new UsernamePasswordAuthenticationToken(
                 loginRequest.getUsername(),
                 loginRequest.getPassword()

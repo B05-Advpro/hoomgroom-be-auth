@@ -1,5 +1,6 @@
 package id.ac.ui.cs.advprog.hoomgroom.auth.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,6 +19,7 @@ public class AuthenticationResponse {
     private String message;
     private Map<String,String> data;
 
+    @JsonIgnore
     public String getToken() {
         return data.get("token");
     }

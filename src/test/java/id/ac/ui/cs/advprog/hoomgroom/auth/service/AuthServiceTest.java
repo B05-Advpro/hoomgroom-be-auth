@@ -20,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.naming.AuthenticationException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -155,8 +156,10 @@ public class AuthServiceTest {
     void testValidLogin() {
         String token = "abcde.fghij.klmno";
         User user = User.builder().username(loginRequest.getUsername()).password(loginRequest.getPassword()).build();
-        doReturn(token).when(jwtService).generateToken(user);
-        doReturn(Optional.ofNullable(user)).when(userRepository).findByUsername(loginRequest.getUsername());
+        Map<String, Object> extraClaims = new HashMap<>();
+        extraClaims.put("role", user.getRole());
+        doReturn(token).when(jwtService).generateToken(extraClaims, user);
+        doReturn(Optional.of(user)).when(userRepository).findByUsername(loginRequest.getUsername());
         doReturn(null).when(authenticationManager).authenticate(new UsernamePasswordAuthenticationToken(
                 loginRequest.getUsername(),
                 loginRequest.getPassword()

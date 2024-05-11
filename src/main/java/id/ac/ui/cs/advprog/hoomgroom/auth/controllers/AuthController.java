@@ -16,9 +16,14 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     @Autowired
     private final AuthService authService;
-    @GetMapping("")
-    public String homePage() {
-        return "Hello, world!";
+    @GetMapping(value={"", "/"})
+    public ResponseEntity<Object> getHomePage() {
+        return new ResponseEntity<>("Invalid endpoint. Try /login or /register.", HttpStatus.BAD_REQUEST);
+    }
+
+    @PostMapping(value={"", "/"})
+    public ResponseEntity<Object> postHomePage() {
+        return new ResponseEntity<>("Invalid endpoint. Try /login or /register.", HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping("/register")
@@ -35,6 +40,11 @@ public class AuthController {
         return response;
     }
 
+    @GetMapping(value={"/register/", "/register"})
+    public ResponseEntity<Object> getRegister() {
+        return new ResponseEntity<>("Invalid method.", HttpStatus.BAD_REQUEST);
+    }
+
     @PostMapping("/login")
     public ResponseEntity<Object> authenticate(@RequestBody AuthenticationRequest request) {
         ResponseEntity<Object> response;
@@ -47,5 +57,10 @@ public class AuthController {
                     .build(), HttpStatus.BAD_REQUEST);
         }
         return response;
+    }
+
+    @GetMapping(value={"/login/", "/login"})
+    public ResponseEntity<Object> getLogin() {
+        return new ResponseEntity<>("Invalid method.", HttpStatus.BAD_REQUEST);
     }
 }

@@ -1,5 +1,6 @@
 package id.ac.ui.cs.advprog.hoomgroom.auth.configs;
 
+import id.ac.ui.cs.advprog.hoomgroom.auth.enums.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,12 +25,12 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth-> auth
                         .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/actuator/**").hasAuthority("ROLE_"+UserRole.ADMIN.getRole())
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess-> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuth, UsernamePasswordAuthenticationFilter.class);
-
 
         return http.build();
     }

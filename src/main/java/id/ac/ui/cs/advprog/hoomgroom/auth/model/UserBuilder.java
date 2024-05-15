@@ -18,7 +18,7 @@ public class UserBuilder {
 
     public UserBuilder username(String username) {
         if (username.isEmpty() || !usernamePattern.matcher(username).matches()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Username is empty or contains invalid characters.");
         }
         this.username = username;
         return this;
@@ -31,7 +31,7 @@ public class UserBuilder {
 
     public UserBuilder password(String password) {
         if (password.isEmpty()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Password cannot be empty.");
         }
         this.password = password;
         return this;
@@ -39,7 +39,7 @@ public class UserBuilder {
 
     public UserBuilder email(String email) {
         if (!emailPattern.matcher(email).matches()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Invalid or empty email.");
         }
         this.email = email;
         return this;
@@ -47,7 +47,7 @@ public class UserBuilder {
 
     public UserBuilder sex(String sex){
         if (sex.isEmpty() || !(sex.equals("M") || sex.equals("F"))) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Invalid or empty sex.");
         }
         this.sex = sex;
         return this;
@@ -55,13 +55,18 @@ public class UserBuilder {
 
     public UserBuilder role(String role){
         if (!UserRole.contains(role)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Invalid role.");
         }
         this.role = UserRole.valueOf(role);
         return this;
     }
     public UserBuilder birthDate(String birthDate){
-        this.birthDate = LocalDate.parse(birthDate);
+        try {
+            this.birthDate = LocalDate.parse(birthDate);
+        }
+        catch (Exception e) {
+            throw new IllegalArgumentException("Invalid birth date.");
+        }
         return this;
     }
 

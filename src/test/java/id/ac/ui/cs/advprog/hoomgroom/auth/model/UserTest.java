@@ -70,7 +70,7 @@ class UserTest {
 
     @Test
     void testCreateUserInvalidDate() {
-        assertThrows(DateTimeParseException.class, () -> userBuilder.birthDate("37826957812").build());
+        assertThrows(IllegalArgumentException.class, () -> userBuilder.birthDate("37826957812").build());
     }
 
     @Test

@@ -32,6 +32,12 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthenticationResponse register(RegisterRequest request) {
+        if (userRepository.findByUsername(request.getUsername()).isPresent()) {
+            throw new IllegalArgumentException("User already exists!");
+        }
+        else if (request.getPassword().isEmpty()) {
+            throw new IllegalArgumentException("Password cannot be empty.");
+        }
         User user = User.builder()
                 .username(request.getUsername())
                 .fullName(request.getFullName())
@@ -41,19 +47,11 @@ public class AuthServiceImpl implements AuthService {
                 .sex(request.getSex())
                 .role(request.getRole())
                 .build();
-        if (userRepository.findByUsername(request.getUsername()).isEmpty()) {
-            userRepository.save(user);
-        }
-        else {
-            throw new IllegalArgumentException("User already exists");
-        }
-        String jwtToken = jwtService.generateToken(user);
-        Map<String, String> data = new HashMap<String, String>();
-        data.put("token", jwtToken);
+        userRepository.save(user);
         return AuthenticationResponse.builder()
                 .status("success")
                 .message("User registered successfully.")
-                .data(data).build();
+                .build();
     }
 
     @Override

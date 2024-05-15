@@ -80,23 +80,17 @@ public class AuthServiceTest {
      */
     @Test
     void testValidRegister() {
-        String token = "abcde.fghij.klmno";
-        doReturn(token).when(jwtService).generateToken(any(User.class));
-
         doReturn("$2a$12$tuUIz/Suy/iFj5b6UFWmROzMiqYMyPokavtlnVhwEHhF0CeCddokO")
                 .when(passwordEncoder)
                 .encode(registerRequest.getPassword());
 
         AuthenticationResponse registerResponse = authService.register(registerRequest);
         verify(userRepository, times(1)).save(any(User.class));
-        assertEquals(registerResponse.getToken(), token);
     }
 
     @Test
     void testValidRegisterEmptyFullName() {
         registerRequest.setFullName("");
-        String token = "abcde.fghij.klmno";
-        doReturn(token).when(jwtService).generateToken(any(User.class));
 
         doReturn("$2a$12$tuUIz/Suy/iFj5b6UFWmROzMiqYMyPokavtlnVhwEHhF0CeCddokO")
                 .when(passwordEncoder)
@@ -104,7 +98,6 @@ public class AuthServiceTest {
 
         AuthenticationResponse registerResponse = authService.register(registerRequest);
         verify(userRepository, times(1)).save(any(User.class));
-        assertEquals(registerResponse.getToken(), token);
     }
 
     @Test
@@ -116,9 +109,6 @@ public class AuthServiceTest {
     @Test
     void testInvalidRegisterEmptyPassword() {
         registerRequest.setPassword("");
-        doReturn("")
-                .when(passwordEncoder)
-                .encode(registerRequest.getPassword());
         assertThrows(IllegalArgumentException.class, () -> authService.register(registerRequest));
     }
 

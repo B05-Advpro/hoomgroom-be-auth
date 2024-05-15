@@ -35,7 +35,7 @@ public class AuthController {
         } catch (IllegalArgumentException e) {
             response = new ResponseEntity<>(AuthenticationResponse.builder()
                     .status("failed")
-                    .message("User already exists.")
+                    .message(e.getMessage())
                     .build(), HttpStatus.BAD_REQUEST);
         }
         return response;

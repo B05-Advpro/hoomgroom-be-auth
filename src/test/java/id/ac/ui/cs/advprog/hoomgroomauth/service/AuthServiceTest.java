@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class AuthServiceTest {
+class AuthServiceTest {
     @Mock
     private AuthenticationManager authenticationManager;
 
@@ -83,17 +83,18 @@ public class AuthServiceTest {
                 .when(passwordEncoder)
                 .encode(registerRequest.getPassword());
 
-        AuthenticationResponse registerResponse = authService.register(registerRequest);
+        authService.register(registerRequest);
         verify(userRepository, times(1)).save(any(User.class));
     }
 
     @Test
     void testValidRegisterEmptyFullName() {
+        registerRequest.setFullName("");
         doReturn("$2a$12$tuUIz/Suy/iFj5b6UFWmROzMiqYMyPokavtlnVhwEHhF0CeCddokO")
                 .when(passwordEncoder)
                 .encode(registerRequest.getPassword());
 
-        AuthenticationResponse registerResponse = authService.register(registerRequest);
+        authService.register(registerRequest);
         verify(userRepository, times(1)).save(any(User.class));
     }
 
@@ -105,7 +106,7 @@ public class AuthServiceTest {
                 .when(passwordEncoder)
                 .encode(registerRequest.getPassword());
 
-        AuthenticationResponse registerResponse = authService.register(registerRequest);
+        authService.register(registerRequest);
         verify(userRepository, times(1)).save(any(User.class));
 
         User user = User.builder().username(registerRequest.getUsername()).password(registerRequest.getPassword()).build();
@@ -146,7 +147,7 @@ public class AuthServiceTest {
 
     @Test
     void testInvalidRegisterEmptySex() {
-        registerRequest.setRole("");
+        registerRequest.setSex("");
         doReturn("$2a$12$tuUIz/Suy/iFj5b6UFWmROzMiqYMyPokavtlnVhwEHhF0CeCddokO")
                 .when(passwordEncoder)
                 .encode(registerRequest.getPassword());

@@ -4,8 +4,6 @@ import id.ac.ui.cs.advprog.hoomgroomauth.dto.AuthenticationRequest;
 import id.ac.ui.cs.advprog.hoomgroomauth.dto.AuthenticationResponse;
 import id.ac.ui.cs.advprog.hoomgroomauth.dto.RegisterRequest;
 import id.ac.ui.cs.advprog.hoomgroomauth.services.AuthService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +11,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin
 @RequestMapping("/auth")
-@RequiredArgsConstructor
 public class AuthController {
-    @Autowired
     private final AuthService authService;
+
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    }
+
     @GetMapping(value={"", "/"})
     public ResponseEntity<Object> getHomePage() {
         return new ResponseEntity<>("Invalid endpoint. Try /login or /register.", HttpStatus.BAD_REQUEST);

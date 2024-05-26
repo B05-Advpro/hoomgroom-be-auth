@@ -8,22 +8,18 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class JwtServiceTest {
+class JwtServiceTest {
     @BeforeEach
     void setUp() {
         ReflectionTestUtils.setField(jwtService, "SECRET_KEY", "aaaabbbbccccddddeeeeffff1111222233334444555566667777888899990000");
@@ -41,8 +37,8 @@ public class JwtServiceTest {
     void testGenerateJwtToken() {
         when(userDetails.getUsername()).thenReturn("cbkadal");
 
-        String token = jwtService.generateToken(userDetails);
-        String username = jwtService.extractUsername(token);
+        String newToken = jwtService.generateToken(userDetails);
+        String username = jwtService.extractUsername(newToken);
         assertEquals("cbkadal", username);
     }
 
@@ -53,11 +49,11 @@ public class JwtServiceTest {
         extraClaims.put("extra2", "def");
         when(userDetails.getUsername()).thenReturn("cbkadal");
 
-        String token = jwtService.generateToken(extraClaims, userDetails);
-        String extra1 = jwtService.extractExtraClaim(token, "extra1");
-        String extra2 = jwtService.extractExtraClaim(token, "extra2");
-        assertEquals(extra1, "abc");
-        assertEquals(extra2, "def");
+        String newToken = jwtService.generateToken(extraClaims, userDetails);
+        String extra1 = jwtService.extractExtraClaim(newToken, "extra1");
+        String extra2 = jwtService.extractExtraClaim(newToken, "extra2");
+        assertEquals("abc", extra1);
+        assertEquals("def", extra2);
     }
 
     @Test

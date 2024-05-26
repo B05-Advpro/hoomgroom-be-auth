@@ -53,8 +53,8 @@ public class JwtServiceTest {
         doReturn("cbkadal").when(userDetails.getUsername());
 
         String token = jwtService.generateToken(extraClaims, userDetails);
-        String extra1 = jwtService.extractExtraClaim("extra1");
-        String extra2 = jwtService.extractExtraClaim("extra2");
+        String extra1 = jwtService.extractExtraClaim(token, "extra1");
+        String extra2 = jwtService.extractExtraClaim(token, "extra2");
         assertEquals(extra1, "abc");
         assertEquals(extra2, "def");
     }

@@ -1,4 +1,4 @@
-package id.ac.ui.cs.advprog.hoomgroom.auth.services;
+package id.ac.ui.cs.advprog.hoomgroomauth.services;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

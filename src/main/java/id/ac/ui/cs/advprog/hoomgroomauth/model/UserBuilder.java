@@ -1,6 +1,6 @@
-package id.ac.ui.cs.advprog.hoomgroom.auth.model;
+package id.ac.ui.cs.advprog.hoomgroomauth.model;
 
-import id.ac.ui.cs.advprog.hoomgroom.auth.enums.UserRole;
+import id.ac.ui.cs.advprog.hoomgroomauth.enums.UserRole;
 
 import java.time.LocalDate;
 import java.util.regex.Pattern;

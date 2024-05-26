@@ -1,4 +1,4 @@
-package id.ac.ui.cs.advprog.hoomgroom.auth;
+package id.ac.ui.cs.advprog.hoomgroomauth;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

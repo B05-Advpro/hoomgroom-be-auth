@@ -1,9 +1,9 @@
-package id.ac.ui.cs.advprog.hoomgroom.auth.controllers;
+package id.ac.ui.cs.advprog.hoomgroomauth.controllers;
 
-import id.ac.ui.cs.advprog.hoomgroom.auth.dto.AuthenticationRequest;
-import id.ac.ui.cs.advprog.hoomgroom.auth.dto.AuthenticationResponse;
-import id.ac.ui.cs.advprog.hoomgroom.auth.dto.RegisterRequest;
-import id.ac.ui.cs.advprog.hoomgroom.auth.services.AuthService;
+import id.ac.ui.cs.advprog.hoomgroomauth.dto.AuthenticationRequest;
+import id.ac.ui.cs.advprog.hoomgroomauth.dto.AuthenticationResponse;
+import id.ac.ui.cs.advprog.hoomgroomauth.dto.RegisterRequest;
+import id.ac.ui.cs.advprog.hoomgroomauth.services.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

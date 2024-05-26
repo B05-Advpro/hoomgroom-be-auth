@@ -1,6 +1,6 @@
-package id.ac.ui.cs.advprog.hoomgroom.auth.configs;
+package id.ac.ui.cs.advprog.hoomgroomauth.configs;
 
-import id.ac.ui.cs.advprog.hoomgroom.auth.repositories.UserRepository;
+import id.ac.ui.cs.advprog.hoomgroomauth.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

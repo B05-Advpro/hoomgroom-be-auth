@@ -1,11 +1,10 @@
-package id.ac.ui.cs.advprog.hoomgroom.auth.services;
+package id.ac.ui.cs.advprog.hoomgroomauth.services;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import io.jsonwebtoken.security.SignatureException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -30,7 +29,7 @@ public class JwtService {
         return String.valueOf(extractAllClaims(token).get("role"));
     }
 
-    public String extractId(String token){return extractClaim(token, Claims::getId);}
+    public String extractExtraClaim(String token, String claim){return String.valueOf(extractAllClaims(token).get(claim));}
 
     public String generateToken(Map<String, Object> extraClaims,
                                 UserDetails userDetails){

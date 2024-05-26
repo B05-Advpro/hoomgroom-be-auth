@@ -1,6 +1,6 @@
-package id.ac.ui.cs.advprog.hoomgroom.auth.repositories;
+package id.ac.ui.cs.advprog.hoomgroomauth.repositories;
 
-import id.ac.ui.cs.advprog.hoomgroom.auth.model.User;
+import id.ac.ui.cs.advprog.hoomgroomauth.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

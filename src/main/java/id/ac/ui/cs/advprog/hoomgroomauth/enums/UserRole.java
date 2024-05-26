@@ -1,4 +1,4 @@
-package id.ac.ui.cs.advprog.hoomgroom.auth.enums;
+package id.ac.ui.cs.advprog.hoomgroomauth.enums;
 
 import lombok.Getter;
 

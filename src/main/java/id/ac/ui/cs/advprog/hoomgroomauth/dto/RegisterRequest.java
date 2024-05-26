@@ -1,4 +1,4 @@
-package id.ac.ui.cs.advprog.hoomgroom.auth.dto;
+package id.ac.ui.cs.advprog.hoomgroomauth.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationRequest {
+public class RegisterRequest {
     private String username;
+    private String fullName;
     private String password;
+    private String email;
+    private String role;
+    private String birthDate;
+    private String sex;
 }

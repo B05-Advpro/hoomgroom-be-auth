@@ -21,8 +21,8 @@ class UserTest {
 
     @Test
     void testCreateUserInvalidUsername() {
-        assertThrows(IllegalArgumentException.class, () -> userBuilder.username("").build());
-        assertThrows(IllegalArgumentException.class, () -> userBuilder.username("~@#$!@%@#$%!$^!#$%").build());
+        assertThrows(IllegalArgumentException.class, () -> userBuilder.username(""));
+        assertThrows(IllegalArgumentException.class, () -> userBuilder.username("~@#$!@%@#$%!$^!#$%"));
     }
 
     @Test
@@ -34,7 +34,7 @@ class UserTest {
 
     @Test
     void testCreateUserInvalidPassword() {
-        assertThrows(IllegalArgumentException.class, () -> userBuilder.password("").build());
+        assertThrows(IllegalArgumentException.class, () -> userBuilder.password(""));
     }
 
     @Test
@@ -58,7 +58,7 @@ class UserTest {
 
     @Test
     void testCreateUserInvalidEmail() {
-        assertThrows(IllegalArgumentException.class, () -> userBuilder.email("Gak Punya Email 😭").build());
+        assertThrows(IllegalArgumentException.class, () -> userBuilder.email("Gak Punya Email 😭"));
     }
 
     @Test
@@ -69,7 +69,7 @@ class UserTest {
 
     @Test
     void testCreateUserInvalidDate() {
-        assertThrows(IllegalArgumentException.class, () -> userBuilder.birthDate("37826957812").build());
+        assertThrows(IllegalArgumentException.class, () -> userBuilder.birthDate("37826957812"));
     }
 
     @Test
@@ -82,7 +82,7 @@ class UserTest {
 
     @Test
     void testCreateUserInvalidSex() {
-        assertThrows(IllegalArgumentException.class, () -> userBuilder.sex("N").build());
+        assertThrows(IllegalArgumentException.class, () -> userBuilder.sex("N"));
     }
 
     @Test
@@ -96,6 +96,6 @@ class UserTest {
 
     @Test
     void testCreateUserNonexistentRole() {
-        assertThrows(IllegalArgumentException.class, () -> userBuilder.role("HACKER").build());
+        assertThrows(IllegalArgumentException.class, () -> userBuilder.role("HACKER"));
     }
 }

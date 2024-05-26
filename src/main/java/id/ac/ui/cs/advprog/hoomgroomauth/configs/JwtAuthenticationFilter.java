@@ -1,6 +1,6 @@
-package id.ac.ui.cs.advprog.hoomgroom.auth.configs;
+package id.ac.ui.cs.advprog.hoomgroomauth.configs;
 
-import id.ac.ui.cs.advprog.hoomgroom.auth.services.JwtService;
+import id.ac.ui.cs.advprog.hoomgroomauth.services.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

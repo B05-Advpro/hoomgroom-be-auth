@@ -1,11 +1,10 @@
-package id.ac.ui.cs.advprog.hoomgroom.auth.model;
+package id.ac.ui.cs.advprog.hoomgroomauth.model;
 
-import id.ac.ui.cs.advprog.hoomgroom.auth.enums.UserRole;
+import id.ac.ui.cs.advprog.hoomgroomauth.enums.UserRole;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 import static org.junit.jupiter.api.Assertions.*;
 class UserTest {

@@ -1,9 +1,9 @@
 plugins {
     java
-    id("org.sonarqube") version "4.4.1.3373"
     id("org.springframework.boot") version "3.2.4"
     id("io.spring.dependency-management") version "1.1.4"
     jacoco
+    id("org.sonarqube") version "4.4.1.3373"
 }
 
 group = "id.ac.ui.cs.advprog"
@@ -11,6 +11,16 @@ version = "0.0.1-SNAPSHOT"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21
+}
+
+sonarqube {
+    properties {
+        property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.organization", "b05-advpro")
+        property("sonar.projectKey", "B05-Advpro_hoomgroom-be-auth")
+        property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml")
+        property("sonar.junit.reportPaths", "build/test-results/test")
+    }
 }
 
 configurations {
@@ -63,14 +73,11 @@ tasks.withType<Test>().configureEach() {
 }
 
 tasks.test {
-    filter {
-        excludeTestsMatching("*FunctionalTest")
-    }
-
-    finalizedBy(tasks.jacocoTestReport)
+    finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
 }
 
 tasks.jacocoTestReport {
+    dependsOn(tasks.test) // tests are required to run before generating the report
     classDirectories.setFrom(files(classDirectories.files.map {
         fileTree(it) { setExcludes(listOf(
                 "**/*Application**",
@@ -78,19 +85,12 @@ tasks.jacocoTestReport {
                 "**/dto/**",
                 )) }
     }))
-    dependsOn(tasks.test) // tests are required to run before generating the report
 
     reports {
-        xml.required.set(true)
-        html.required.set(true)
-    }
-}
-
-sonar {
-    properties {
-        property("sonar.host.url", "https://sonarcloud.io")
-        property("sonar.organization", "b05-advpro")
-        property("sonar.projectKey", "B05-Advpro_hoomgroom-be-auth")
+        xml.required = true
+        html.required = true
+        csv.required = true
+        html.outputLocation.set(layout.buildDirectory.dir("jacocoHtml"))
     }
 }
 

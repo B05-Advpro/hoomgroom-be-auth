@@ -1,8 +1,7 @@
-package id.ac.ui.cs.advprog.hoomgroom.auth.model;
+package id.ac.ui.cs.advprog.hoomgroomauth.model;
 
-import id.ac.ui.cs.advprog.hoomgroom.auth.enums.UserRole;
+import id.ac.ui.cs.advprog.hoomgroomauth.enums.UserRole;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

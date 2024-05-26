@@ -1,4 +1,4 @@
-package id.ac.ui.cs.advprog.hoomgroom.auth.dto;
+package id.ac.ui.cs.advprog.hoomgroomauth.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;

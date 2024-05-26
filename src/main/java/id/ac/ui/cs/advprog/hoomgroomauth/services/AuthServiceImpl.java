@@ -1,12 +1,10 @@
-package id.ac.ui.cs.advprog.hoomgroom.auth.services;
+package id.ac.ui.cs.advprog.hoomgroomauth.services;
 
-import id.ac.ui.cs.advprog.hoomgroom.auth.dto.AuthenticationRequest;
-import id.ac.ui.cs.advprog.hoomgroom.auth.dto.AuthenticationResponse;
-import id.ac.ui.cs.advprog.hoomgroom.auth.dto.RegisterRequest;
-import id.ac.ui.cs.advprog.hoomgroom.auth.enums.UserRole;
-import id.ac.ui.cs.advprog.hoomgroom.auth.model.User;
-import id.ac.ui.cs.advprog.hoomgroom.auth.repositories.UserRepository;
-import lombok.RequiredArgsConstructor;
+import id.ac.ui.cs.advprog.hoomgroomauth.dto.AuthenticationRequest;
+import id.ac.ui.cs.advprog.hoomgroomauth.dto.AuthenticationResponse;
+import id.ac.ui.cs.advprog.hoomgroomauth.dto.RegisterRequest;
+import id.ac.ui.cs.advprog.hoomgroomauth.model.User;
+import id.ac.ui.cs.advprog.hoomgroomauth.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

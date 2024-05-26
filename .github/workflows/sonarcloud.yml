@@ -21,12 +21,6 @@ jobs:
           distribution: "temurin"
           java-version: "21"
           cache: "gradle"
-      - name: Cache Gradle packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
-          restore-keys: ${{ runner.os }}-gradle
       - name: Cache SonarCloud packages
         uses: actions/cache@v4
         with:
@@ -35,6 +29,12 @@ jobs:
           restore-keys: ${{ runner.os }}-sonar
       - name: Set gradlew as executable
         run: chmod +x ./gradlew
+      - name: Cache Gradle packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: ${{ runner.os }}-gradle
       - name: Build and analyze
         run: ./gradlew build sonar --info
         env:

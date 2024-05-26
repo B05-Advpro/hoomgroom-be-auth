@@ -1,12 +1,10 @@
-package id.ac.ui.cs.advprog.hoomgroom.auth.services;
+package id.ac.ui.cs.advprog.hoomgroomauth.services;
 
-import id.ac.ui.cs.advprog.hoomgroom.auth.dto.AuthenticationRequest;
-import id.ac.ui.cs.advprog.hoomgroom.auth.dto.AuthenticationResponse;
-import id.ac.ui.cs.advprog.hoomgroom.auth.dto.RegisterRequest;
-import id.ac.ui.cs.advprog.hoomgroom.auth.enums.UserRole;
-import id.ac.ui.cs.advprog.hoomgroom.auth.model.User;
-import id.ac.ui.cs.advprog.hoomgroom.auth.repositories.UserRepository;
-import lombok.RequiredArgsConstructor;
+import id.ac.ui.cs.advprog.hoomgroomauth.dto.AuthenticationRequest;
+import id.ac.ui.cs.advprog.hoomgroomauth.dto.AuthenticationResponse;
+import id.ac.ui.cs.advprog.hoomgroomauth.dto.RegisterRequest;
+import id.ac.ui.cs.advprog.hoomgroomauth.model.User;
+import id.ac.ui.cs.advprog.hoomgroomauth.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,17 +18,18 @@ import java.util.Map;
 
 @Service
 public class AuthServiceImpl implements AuthService {
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final JwtService jwtService;
+    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
 
     @Autowired
-    private JwtService jwtService;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    public AuthServiceImpl(UserRepository userRepository, JwtService jwtService, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
+        this.userRepository = userRepository;
+        this.jwtService = jwtService;
+        this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
+    }
 
     @Override
     public AuthenticationResponse register(RegisterRequest request) {
@@ -67,7 +66,7 @@ public class AuthServiceImpl implements AuthService {
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("role", user.getRole());
         String jwtToken = jwtService.generateToken(extraClaims, user);
-        Map<String, String> data = new HashMap<String, String>();
+        Map<String, String> data = new HashMap<>();
         data.put("token", jwtToken);
         return AuthenticationResponse.builder()
                 .status("success")

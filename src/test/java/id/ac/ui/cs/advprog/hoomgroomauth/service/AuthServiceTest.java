@@ -1,13 +1,13 @@
-package id.ac.ui.cs.advprog.hoomgroom.auth.service;
+package id.ac.ui.cs.advprog.hoomgroomauth.service;
 
-import id.ac.ui.cs.advprog.hoomgroom.auth.dto.AuthenticationRequest;
-import id.ac.ui.cs.advprog.hoomgroom.auth.dto.AuthenticationResponse;
-import id.ac.ui.cs.advprog.hoomgroom.auth.dto.RegisterRequest;
-import id.ac.ui.cs.advprog.hoomgroom.auth.enums.UserRole;
-import id.ac.ui.cs.advprog.hoomgroom.auth.model.User;
-import id.ac.ui.cs.advprog.hoomgroom.auth.repositories.UserRepository;
-import id.ac.ui.cs.advprog.hoomgroom.auth.services.AuthServiceImpl;
-import id.ac.ui.cs.advprog.hoomgroom.auth.services.JwtService;
+import id.ac.ui.cs.advprog.hoomgroomauth.dto.AuthenticationRequest;
+import id.ac.ui.cs.advprog.hoomgroomauth.dto.AuthenticationResponse;
+import id.ac.ui.cs.advprog.hoomgroomauth.dto.RegisterRequest;
+import id.ac.ui.cs.advprog.hoomgroomauth.enums.UserRole;
+import id.ac.ui.cs.advprog.hoomgroomauth.model.User;
+import id.ac.ui.cs.advprog.hoomgroomauth.repositories.UserRepository;
+import id.ac.ui.cs.advprog.hoomgroomauth.services.AuthServiceImpl;
+import id.ac.ui.cs.advprog.hoomgroomauth.services.JwtService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,7 +18,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.naming.AuthenticationException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -29,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class AuthServiceTest {
+class AuthServiceTest {
     @Mock
     private AuthenticationManager authenticationManager;
 
@@ -84,17 +83,18 @@ public class AuthServiceTest {
                 .when(passwordEncoder)
                 .encode(registerRequest.getPassword());
 
-        AuthenticationResponse registerResponse = authService.register(registerRequest);
+        authService.register(registerRequest);
         verify(userRepository, times(1)).save(any(User.class));
     }
 
     @Test
     void testValidRegisterEmptyFullName() {
+        registerRequest.setFullName("");
         doReturn("$2a$12$tuUIz/Suy/iFj5b6UFWmROzMiqYMyPokavtlnVhwEHhF0CeCddokO")
                 .when(passwordEncoder)
                 .encode(registerRequest.getPassword());
 
-        AuthenticationResponse registerResponse = authService.register(registerRequest);
+        authService.register(registerRequest);
         verify(userRepository, times(1)).save(any(User.class));
     }
 
@@ -106,7 +106,7 @@ public class AuthServiceTest {
                 .when(passwordEncoder)
                 .encode(registerRequest.getPassword());
 
-        AuthenticationResponse registerResponse = authService.register(registerRequest);
+        authService.register(registerRequest);
         verify(userRepository, times(1)).save(any(User.class));
 
         User user = User.builder().username(registerRequest.getUsername()).password(registerRequest.getPassword()).build();
@@ -147,7 +147,7 @@ public class AuthServiceTest {
 
     @Test
     void testInvalidRegisterEmptySex() {
-        registerRequest.setRole("");
+        registerRequest.setSex("");
         doReturn("$2a$12$tuUIz/Suy/iFj5b6UFWmROzMiqYMyPokavtlnVhwEHhF0CeCddokO")
                 .when(passwordEncoder)
                 .encode(registerRequest.getPassword());

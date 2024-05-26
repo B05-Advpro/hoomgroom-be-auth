@@ -39,14 +39,34 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
+tasks.register<Test>("unitTest") {
+    description = "Runs unit tests."
+    group = "verification"
+
+    filter {
+        excludeTestsMatching("*FunctionalTest")
+    }
+}
+
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.test {
+    filter {
+        excludeTestsMatching("*FunctionalTest")
+    }
+
     finalizedBy(tasks.jacocoTestReport)
 }
 
 tasks.jacocoTestReport {
     classDirectories.setFrom(files(classDirectories.files.map {
-        fileTree(it) { exclude("**/*Application**") }
+        fileTree(it) { setExcludes(listOf(
+                "**/*Application**",
+                "**/configs/**",
+                "**/dto/**",
+                )) }
     }))
     dependsOn(tasks.test) // tests are required to run before generating the report
     reports {

@@ -90,7 +90,17 @@ public class AuthServiceTest {
 
     @Test
     void testValidRegisterEmptyFullName() {
-        registerRequest.setFullName("");
+        doReturn("$2a$12$tuUIz/Suy/iFj5b6UFWmROzMiqYMyPokavtlnVhwEHhF0CeCddokO")
+                .when(passwordEncoder)
+                .encode(registerRequest.getPassword());
+
+        AuthenticationResponse registerResponse = authService.register(registerRequest);
+        verify(userRepository, times(1)).save(any(User.class));
+    }
+
+    @Test
+    void testInvalidRegisterUserExists() {
+        registerRequest.setFullName("a");
 
         doReturn("$2a$12$tuUIz/Suy/iFj5b6UFWmROzMiqYMyPokavtlnVhwEHhF0CeCddokO")
                 .when(passwordEncoder)
@@ -98,6 +108,11 @@ public class AuthServiceTest {
 
         AuthenticationResponse registerResponse = authService.register(registerRequest);
         verify(userRepository, times(1)).save(any(User.class));
+
+        User user = User.builder().username(registerRequest.getUsername()).password(registerRequest.getPassword()).build();
+        doReturn(Optional.of(user)).when(userRepository).findByUsername(registerRequest.getUsername());
+
+        assertThrows(IllegalArgumentException.class, () -> authService.register(registerRequest));
     }
 
     @Test

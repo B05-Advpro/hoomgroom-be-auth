@@ -29,7 +29,7 @@ public class JwtService {
         return String.valueOf(extractAllClaims(token).get("role"));
     }
 
-    public String extractId(String token){return extractClaim(token, Claims::getId);}
+    public String extractExtraClaim(String token, String claim){return String.valueOf(extractAllClaims(token).get(claim));}
 
     public String generateToken(Map<String, Object> extraClaims,
                                 UserDetails userDetails){

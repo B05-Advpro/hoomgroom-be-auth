@@ -20,6 +20,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class JwtServiceTest {
@@ -38,7 +39,7 @@ public class JwtServiceTest {
 
     @Test
     void testGenerateJwtToken() {
-        doReturn("cbkadal").when(userDetails.getUsername());
+        when(userDetails.getUsername()).thenReturn("cbkadal");
 
         String token = jwtService.generateToken(userDetails);
         String username = jwtService.extractUsername(token);
@@ -50,7 +51,7 @@ public class JwtServiceTest {
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("extra1", "abc");
         extraClaims.put("extra2", "def");
-        doReturn("cbkadal").when(userDetails.getUsername());
+        when(userDetails.getUsername()).thenReturn("cbkadal");
 
         String token = jwtService.generateToken(extraClaims, userDetails);
         String extra1 = jwtService.extractExtraClaim(token, "extra1");
